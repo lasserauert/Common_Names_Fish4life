@@ -81,6 +81,32 @@ head(final_f4l)
 ```{r}
 write.csv(final_f4l, "../data/Fish4life_w_common.csv", row.names = FALSE)
 ```
+# info / citations
+
+```{r}
+library(grateful)
+cite_packages(out.dir = ".")
+```
 
 
+We used R v. 4.5.1 (R Core Team 2025) and the following R packages: rgbif v. 3.8.3 (Chamberlain and Boettiger 2017; Chamberlain et al. 2026), rmarkdown v. 2.29 (Xie, Allaire, and Grolemund 2018; Xie, Dervieux, and Riederer 2020; Allaire et al. 2024), tidyverse v. 2.0.0 (Wickham et al. 2019).
 
+
+## Package citations
+```
+Allaire, JJ, Yihui Xie, Christophe Dervieux, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, et al. 2024. rmarkdown: Dynamic Documents for r. https://github.com/rstudio/rmarkdown.
+
+Chamberlain, Scott, Vijay Barve, Dan Mcglinn, Damiano Oldoni, Peter Desmet, Laurens Geffert, and Karthik Ram. 2026. rgbif: Interface to the Global Biodiversity Information Facility API. https://CRAN.R-project.org/package=rgbif.
+
+Chamberlain, Scott, and Carl Boettiger. 2017. “R Python, and Ruby Clients for GBIF Species Occurrence Data.” PeerJ PrePrints. https://doi.org/10.7287/peerj.preprints.3304v1.
+
+R Core Team. 2025. R: A Language and Environment for Statistical Computing. Vienna, Austria: R Foundation for Statistical Computing. https://www.R-project.org/.
+
+Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. “Welcome to the tidyverse.” Journal of Open Source Software 4 (43): 1686. https://doi.org/10.21105/joss.01686.
+Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. R Markdown: The Definitive Guide. Boca Raton, Florida: Chapman; Hall/CRC. https://bookdown.org/yihui/rmarkdown.
+
+Xie, Yihui, Christophe Dervieux, and Emily Riederer. 2020. R Markdown Cookbook. Boca Raton, Florida: Chapman; Hall/CRC. https://bookdown.org/yihui/rmarkdown-cookbook.
+```
+```{r}
+sessionInfo()
+```

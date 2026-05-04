@@ -1,0 +1,86 @@
+---
+title: "Common names for Fish4life"
+author: "Lasse Rauert"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    toc_depth: 4
+    toc_float: true
+---
+
+# Libraries
+```{r, results="hide", message=FALSE}
+library(rgbif)
+
+library(dplyr)
+library(tidyr)
+
+library(purrr)
+```
+# Load name list data
+```{r}
+f4l <- read.csv("../data/names_Fish4life.csv")
+f4l
+```
+# Match fish_names to GBIF Backbone --> full parsed taxonomy
+```{r}
+fish_names_matched<-name_backbone_checklist(f4l$Scientific.Name)
+fish_names_matched
+write.csv(fish_names_matched,"../data/sci_names.csv", row.names = FALSE)
+```
+
+
+# add common names from GBIF Taxonomic backbone to the f4l Table
+## function to get common names for singel species
+```{r}
+get_common_names <- function(species_name) {
+  key_info <- name_backbone(name = species_name)
+  
+  if (!"speciesKey" %in% names(key_info)) {
+    return(data.frame(Scientific.Name = species_name))
+  }
+  
+  key <- key_info$speciesKey
+  v_names <- name_usage(key = key, data = 'vernacularNames')
+  
+  if (length(v_names$data) == 0 || nrow(v_names$data) == 0 || !"language" %in% names(v_names$data)) {
+    return(data.frame(Scientific.Name = species_name))
+  }
+  
+  clean_v_data <- v_names$data %>%
+    filter(!is.na(language) & language != "") %>%
+    group_by(language) %>%
+    summarise(vernacularName = first(vernacularName), .groups = 'drop') %>%
+    mutate(Scientific.Name = species_name)
+  
+  return(clean_v_data)
+}
+```
+
+## apply function to dataset
+```{r}
+unique_species <- unique(f4l$Scientific.Name)
+all_common_names <- map_dfr(unique_species, get_common_names)
+```
+
+## join data
+```{r}
+# pivot 
+wide_common_names <- all_common_names %>%
+  pivot_wider(names_from = language, values_from = vernacularName)
+
+# join
+final_f4l <- f4l %>%
+  left_join(wide_common_names, by = "Scientific.Name")
+
+head(final_f4l)
+```
+
+```{r}
+write.csv(final_f4l, "../data/Fish4life_w_common.csv", row.names = FALSE)
+```
+
+
+

@@ -47,3 +47,16 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+#Exclude large files
+*.tiff
+*.tif
+*.jpg
+*.jpeg
+*.png
+*.svg
+*.nc
+*.grd
+*.gri
+*.grd.aux.xml
+*.pdf

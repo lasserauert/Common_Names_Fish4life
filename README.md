@@ -5,4 +5,4 @@ This is a qick and dirty script to retrive the common names for the relevant spe
 
 
 # Info
-A project for the Archipelagos Institute of Marine conservation, by Lasse Rauert 04/05/2026
+A project for the Archipelagos Institute of Marine Conservation, by Lasse Rauert 04/05/2026
